@@ -1,0 +1,44 @@
+<header>
+  🎤 HipHop IG Hub
+  <span class="add-btn" onclick="openPopup()">＋</span>
+</header>
+
+<main>
+  <section id="rapper" class="active"><div id="rapperFeed"></div></section>
+  <section id="graffiti"><div id="graffitiFeed"></div></section>
+  <section id="dj"><div id="djFeed"></div></section>
+  <section id="lyrics"><div id="lyricsFeed"></div></section>
+</main>
+
+<div id="popup">
+  <div class="popup-content">
+    <h3>Add Post</h3>
+    <input id="popupUser" placeholder="Username">
+
+    <!-- Opzioni barre per Lyrics -->
+    <div id="lyricsOptions" style="display:none; margin-top:8px;">
+      <label for="barCount">Choose bars:</label>
+      <select id="barCount">
+        <option value="4">4</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+        <option value="free">Free</option>
+      </select>
+    </div>
+
+    <!-- Image / Video URL solo per sezioni non Lyrics -->
+    <input id="popupImg" placeholder="Image URL (optional)">
+    <input id="popupVideo" placeholder="Video URL (optional)">
+
+    <textarea id="popupText" placeholder="Caption / content"></textarea>
+    <button onclick="submitPost()">Post</button>
+    <button onclick="closePopup()" style="margin-top:5px;background:#555;">Cancel</button>
+  </div>
+</div>
+
+<nav>
+  <button class="active" onclick="openTab('rapper')"><span>🎤</span>Rapper</button>
+  <button onclick="openTab('graffiti')"><span>🧱</span>Graffiti</button>
+  <button onclick="openTab('dj')"><span>🎧</span>DJ</button>
+  <button onclick="openTab('lyrics')"><span>✍️</span>Lyrics</button>
+</nav>

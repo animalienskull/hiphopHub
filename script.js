@@ -1,4 +1,3 @@
-// Cambiare tab
 function openTab(tabName) {
   document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
   document.getElementById(tabName).classList.add('active');
@@ -7,7 +6,6 @@ function openTab(tabName) {
   document.querySelector(`nav button[onclick="openTab('${tabName}')"]`).classList.add('active');
 }
 
-// Popup
 const popup = document.getElementById('popup');
 const popupTitle = document.getElementById('popupTitle');
 const popupName = document.getElementById('popupName');
@@ -15,6 +13,8 @@ const mediaContainer = document.getElementById('mediaContainer');
 const lyricsOptions = document.getElementById('lyricsOptions');
 const popupText = document.getElementById('popupText');
 const barCount = document.getElementById('barCount');
+const popupImgFile = document.getElementById('popupImgFile');
+const popupVideoFile = document.getElementById('popupVideoFile');
 
 function openPopup() {
   const activeSection = document.querySelector('main section.active').id;
@@ -37,12 +37,9 @@ function openPopup() {
 
 function closePopup() { popup.classList.remove('show'); }
 
-// Creazione post
 function submitPost() {
   const name = popupName.value.trim();
   const text = popupText.value.trim();
-  const img = document.getElementById('popupImg').value.trim();
-  const video = document.getElementById('popupVideo').value.trim();
   const bars = barCount.value;
 
   const activeSection = document.querySelector('main section.active');
@@ -50,6 +47,12 @@ function submitPost() {
 
   // Validazione
   if(!name) { alert('Devi inserire un nome.'); return; }
+
+  // Files upload
+  let img = null;
+  if(popupImgFile.files[0]) img = URL.createObjectURL(popupImgFile.files[0]);
+  let video = null;
+  if(popupVideoFile.files[0]) video = URL.createObjectURL(popupVideoFile.files[0]);
 
   if(activeSection.id === 'lyrics') {
     if(!text) { alert('Devi scrivere il testo delle lyrics.'); return; }
@@ -60,10 +63,7 @@ function submitPost() {
       return;
     }
   } else {
-    if(!text && !img && !video) {
-      alert('Devi inserire almeno un testo, un\'immagine o un video.');
-      return;
-    }
+    if(!text && !img && !video) { alert('Devi inserire almeno testo, immagine o video.'); return; }
   }
 
   // Creazione post
@@ -74,17 +74,13 @@ function submitPost() {
   const optionsBtn = document.createElement('div');
   optionsBtn.classList.add('options-btn');
   optionsBtn.textContent = '⋮';
-
   const optionsMenu = document.createElement('div');
   optionsMenu.classList.add('options-menu');
-
   const deleteBtn = document.createElement('button');
   deleteBtn.textContent = 'Elimina';
   deleteBtn.onclick = () => postDiv.remove();
-
   optionsMenu.appendChild(deleteBtn);
   optionsBtn.onclick = () => optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
-
   postDiv.appendChild(optionsBtn);
   postDiv.appendChild(optionsMenu);
 
@@ -96,39 +92,50 @@ function submitPost() {
   } else {
     if(img) { const imgEl = document.createElement('img'); imgEl.src = img; postDiv.appendChild(imgEl); }
     if(video) { const vidEl = document.createElement('video'); vidEl.src = video; vidEl.controls = true; postDiv.appendChild(vidEl); }
-    if(text) { const caption = document.createElement('p'); caption.textContent = `${name}: ${text}`; postDiv.appendChild(caption); }
+    if(text) { const p = document.createElement('p'); p.textContent = `${name}: ${text}`; postDiv.appendChild(p); }
   }
 
   // Like / Dislike
   const actionsDiv = document.createElement('div');
   actionsDiv.classList.add('post-actions');
-
   const likeBtn = document.createElement('button');
-  const likeCounter = document.createElement('span');
-  likeCounter.textContent = '0';
-  likeBtn.innerHTML = '👍 ';
-  likeBtn.appendChild(likeCounter);
+  const likeCounter = document.createElement('span'); likeCounter.textContent = '0';
+  likeBtn.innerHTML = '👍 '; likeBtn.appendChild(likeCounter);
   likeBtn.onclick = () => likeCounter.textContent = parseInt(likeCounter.textContent)+1;
-
   const dislikeBtn = document.createElement('button');
-  const dislikeCounter = document.createElement('span');
-  dislikeCounter.textContent = '0';
-  dislikeBtn.innerHTML = '👎 ';
-  dislikeBtn.appendChild(dislikeCounter);
+  const dislikeCounter = document.createElement('span'); dislikeCounter.textContent = '0';
+  dislikeBtn.innerHTML = '👎 '; dislikeBtn.appendChild(dislikeCounter);
   dislikeBtn.onclick = () => dislikeCounter.textContent = parseInt(dislikeCounter.textContent)+1;
-
-  actionsDiv.appendChild(likeBtn);
-  actionsDiv.appendChild(dislikeBtn);
+  actionsDiv.appendChild(likeBtn); actionsDiv.appendChild(dislikeBtn);
   postDiv.appendChild(actionsDiv);
 
   activeFeed.prepend(postDiv);
 
   // Reset campi
-  popupName.value = '';
-  popupText.value = '';
-  document.getElementById('popupImg').value = '';
-  document.getElementById('popupVideo').value = '';
+  popupName.value = ''; popupText.value = '';
+  popupImgFile.value = ''; popupVideoFile.value = '';
   barCount.value = '4';
-
   closePopup();
+
+  // Opzionale: salva nel localStorage per persistente
+  savePosts();
 }
+
+// ---------------- Persistenza con localStorage ----------------
+function savePosts() {
+  const postsData = [];
+  document.querySelectorAll('main section').forEach(section => {
+    const sectionId = section.id;
+    section.querySelectorAll('.post').forEach(post => {
+      const data = {
+        section: sectionId,
+        html: post.innerHTML
+      };
+      postsData.push(data);
+    });
+  });
+  localStorage.setItem('hiphopPosts', JSON.stringify(postsData));
+}
+
+function loadPosts() {
+  const postsData = JSON

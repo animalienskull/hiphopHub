@@ -43,7 +43,7 @@ main {
 section { display: none; }
 section.active { display: block; }
 
-/* Post */
+/* Post box */
 .post {
   background-color: #111;
   border: 1px solid #333;
@@ -60,6 +60,7 @@ section.active { display: block; }
   right: 10px;
   cursor: pointer;
   font-size: 18px;
+  user-select: none;
 }
 
 .post .options-menu {
@@ -82,10 +83,7 @@ section.active { display: block; }
   text-align: left;
   cursor: pointer;
 }
-
-.post .options-menu button:hover {
-  background-color: #333;
-}
+.post .options-menu button:hover { background-color: #333; }
 
 /* Post media */
 .post img, .post video { width: 100%; border-radius: 8px; margin-bottom: 6px; }
@@ -103,6 +101,7 @@ section.active { display: block; }
   animation: fadeIn 0.3s ease forwards;
 }
 #popup.show { display: flex; }
+
 .popup-content {
   background-color: #111;
   padding: 20px;
@@ -113,7 +112,10 @@ section.active { display: block; }
   flex-direction: column;
   gap: 10px;
 }
-.popup-content input, .popup-content textarea, .popup-content select {
+
+.popup-content input,
+.popup-content textarea,
+.popup-content select {
   padding: 8px;
   font-size: 16px;
   border-radius: 6px;
@@ -121,6 +123,7 @@ section.active { display: block; }
   width: 100%;
 }
 .popup-content textarea { resize: vertical; min-height: 80px; }
+
 .popup-content button {
   padding: 10px;
   font-size: 16px;
@@ -159,3 +162,4 @@ nav button:active { transform: scale(1.2); }
 
 /* Animazione popup */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+

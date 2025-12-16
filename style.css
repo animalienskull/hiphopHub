@@ -162,4 +162,28 @@ nav button:active { transform: scale(1.2); }
 
 /* Animazione popup */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* ... tutto il CSS precedente rimane ... */
+
+/* Contatore like/dislike */
+.post .post-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.post .post-actions button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post .post-actions button span {
+  font-weight: bold;
+}
 

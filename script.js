@@ -49,19 +49,26 @@ function submitPost() {
   if(!name) { alert('Devi inserire un nome.'); return; }
 
   // Files upload
-  let img = null;
-  if(popupImgFile.files[0]) img = URL.createObjectURL(popupImgFile.files[0]);
-  let video = null;
-  if(popupVideoFile.files[0]) video = URL.createObjectURL(popupVideoFile.files[0]);
+ let img = null;
+if(popupImgFile.files[0]) {
+  img = URL.createObjectURL(popupImgFile.files[0]);
+}
+let video = null;
+if(popupVideoFile.files[0]) {
+  video = URL.createObjectURL(popupVideoFile.files[0]);
+}
 
-  if(activeSection.id === 'lyrics') {
-    if(!text) { alert('Devi scrivere il testo delle lyrics.'); return; }
-    const lines = text.split(/\n/);
-    const maxBars = bars === '4' ? 4 : bars === '8' ? 8 : bars === '16' ? 16 : Infinity;
-    if(lines.length > maxBars) {
-      alert(`Hai selezionato ${bars} barre, non puoi scrivere più di ${maxBars} righe.`);
-      return;
-    }
+// Validazione: almeno un contenuto
+if(activeSection.id === 'lyrics') {
+  if(!text) { alert('Devi scrivere il testo delle lyrics.'); return; }
+  // ... gestione barre ...
+} else {
+  if(!text && !img && !video) {
+    alert('Devi inserire almeno testo, immagine o video.'); 
+    return;
+  }
+}
+
   } else {
     if(!text && !img && !video) { alert('Devi inserire almeno testo, immagine o video.'); return; }
   }

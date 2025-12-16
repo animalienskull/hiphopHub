@@ -1,131 +1,61 @@
-let currentSection='rapper';
+// Cambiare tab
+function openTab(tabName) {
+  document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
 
-// TAB SWITCH
-function openTab(tab){
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  document.getElementById(tab).classList.add('active');
-  event.currentTarget.classList.add('active');
-  currentSection=tab;
+  document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`nav button[onclick="openTab('${tabName}')"]`).classList.add('active');
 }
 
-// POPUP
-function openPopup(){
-  document.getElementById('popup').style.display='flex';
-  document.getElementById('popupUser').value='';
-  document.getElementById('popupImg').value='';
-  document.getElementById('popupVideo').value='';
-  document.getElementById('popupText').value='';
+// Popup
+const popup = document.getElementById('popup');
 
-  if(currentSection==='lyrics'){
-    document.getElementById('lyricsOptions').style.display='block';
-    document.getElementById('popupImg').style.display='none';
-    document.getElementById('popupVideo').style.display='none';
-  } else {
-    document.getElementById('lyricsOptions').style.display='none';
-    document.getElementById('popupImg').style.display='block';
-    document.getElementById('popupVideo').style.display='block';
-  }
-}
-function closePopup(){ document.getElementById('popup').style.display='none'; }
-
-// COUNT BARS (Lyrics)
-function countBars(text){
-  return text.split(/\r?\n/).filter(l=>l.trim()!=='').length;
+function openPopup() {
+  popup.classList.add('show');
 }
 
-// ADD POST
-function submitPost(){
-  let user=document.getElementById('popupUser').value;
-  let img=document.getElementById('popupImg').value;
-  let video=document.getElementById('popupVideo').value;
-  let text=document.getElementById('popupText').value;
-  if(!user||!text) return alert('Username and content required!');
+function closePopup() {
+  popup.classList.remove('show');
+}
 
-  if(currentSection==='lyrics'){
-    let barCount=document.getElementById('barCount').value;
-    if(barCount!=='free' && countBars(text) > parseInt(barCount)){
-      return alert(`You selected ${barCount} bars. You cannot exceed this number!`);
-    }
+// Aggiungere post (semplice)
+function submitPost() {
+  const user = document.getElementById('popupUser').value;
+  const img = document.getElementById('popupImg').value;
+  const video = document.getElementById('popupVideo').value;
+  const text = document.getElementById('popupText').value;
+
+  const activeFeed = document.querySelector('main section.active div');
+
+  const postDiv = document.createElement('div');
+  postDiv.classList.add('post');
+
+  if(img) {
+    const imgEl = document.createElement('img');
+    imgEl.src = img;
+    postDiv.appendChild(imgEl);
   }
 
-  let post={user,img,video,text,date:new Date().toLocaleString(),likes:0,comments:[],liked:false};
-  if(currentSection==='lyrics') post.barCount=document.getElementById('barCount').value;
+  if(video) {
+    const vidEl = document.createElement('video');
+    vidEl.src = video;
+    vidEl.controls = true;
+    postDiv.appendChild(vidEl);
+  }
 
-  const data=JSON.parse(localStorage.getItem(currentSection))||[];
-  data.unshift(post);
-  localStorage.setItem(currentSection,JSON.stringify(data));
+  if(text || user) {
+    const caption = document.createElement('p');
+    caption.textContent = `${user ? user + ': ' : ''}${text}`;
+    postDiv.appendChild(caption);
+  }
+
+  activeFeed.prepend(postDiv);
+
   closePopup();
-  loadAllFeeds();
-}
 
-// DELETE POST
-function deletePost(type,index){
-  if(!confirm("Are you sure you want to delete this post?")) return;
-  let data=JSON.parse(localStorage.getItem(type));
-  data.splice(index,1);
-  localStorage.setItem(type,JSON.stringify(data));
-  loadFeed(type);
+  // resettare campi
+  document.getElementById('popupUser').value = '';
+  document.getElementById('popupImg').value = '';
+  document.getElementById('popupVideo').value = '';
+  document.getElementById('popupText').value = '';
 }
-
-// LOAD FEED
-function loadFeed(type){
-  const feed=document.getElementById(type+'Feed');
-  const data=JSON.parse(localStorage.getItem(type))||[];
-  feed.innerHTML='';
-  data.forEach((p,i)=>{
-    const div=document.createElement('div');
-    div.className='post';
-    let media='';
-    if(type!=='lyrics'){
-      if(p.img) media+=`<img src="${p.img}">`;
-      if(p.video) media+=`<video controls src="${p.video}"></video>`;
-    }
-    let barInfo='';
-    if(type==='lyrics' && p.barCount) barInfo=`<small>Bars: ${p.barCount}</small>`;
-    div.innerHTML=`
-      <div class="delete-post" onclick="deletePost('${type}',${i})">…</div>
-      ${media}
-      <div class="post-content">
-        <div class="username">${p.user}</div>
-        <div class="caption">${p.text}</div>
-        <small>${p.date}</small>
-        ${barInfo}
-      </div>
-      <div class="post-actions">
-        <span onclick="toggleLike('${type}',${i})" class="${p.liked?'liked':''}">❤️ ${p.likes}</span>
-        <span onclick="addComment('${type}',${i})">💬 ${p.comments.length}</span>
-      </div>
-    `;
-    feed.appendChild(div);
-  });
-}
-
-// LIKE
-function toggleLike(type,index){
-  const data=JSON.parse(localStorage.getItem(type));
-  let post=data[index];
-  if(post.liked){ post.likes--; post.liked=false; }
-  else { post.likes++; post.liked=true; }
-  data[index]=post;
-  localStorage.setItem(type,JSON.stringify(data));
-  loadFeed(type);
-}
-
-// COMMENT
-function addComment(type,index){
-  const comment=prompt("Enter comment:");
-  if(!comment) return;
-  const data=JSON.parse(localStorage.getItem(type));
-  data[index].comments.push(comment);
-  localStorage.setItem(type,JSON.stringify(data));
-  loadFeed(type);
-}
-
-// LOAD ALL FEEDS
-function loadAllFeeds(){
-  ['rapper','graffiti','dj','lyrics'].forEach(loadFeed);
-}
-
-// INIT
-loadAllFeeds();

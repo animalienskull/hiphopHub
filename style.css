@@ -92,3 +92,71 @@ nav button span { font-size:22px; margin-bottom:3px; }
   header .add-btn { font-size:26px; }
   .post-content { padding:10px; }
 }
+/* ===== MOBILE INSTAGRAM STYLE FIX ===== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1000;
+  border-bottom: 1px solid #222;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #1db954;
+  color: #000;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  padding-top: 72px;
+  padding-bottom: 90px;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #222;
+}
+
+.nav button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav span {
+  font-size: 11px;
+  margin-top: 4px;
+}

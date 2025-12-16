@@ -32,10 +32,7 @@ header {
   cursor: pointer;
   transition: transform 0.2s;
 }
-
-.add-btn:active {
-  transform: scale(1.2);
-}
+.add-btn:active { transform: scale(1.2); }
 
 /* Main e sezioni */
 main {
@@ -43,22 +40,61 @@ main {
   padding: 12px;
   margin-bottom: 70px;
 }
+section { display: none; }
+section.active { display: block; }
 
-section {
+/* Post */
+.post {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 10px;
+  position: relative;
+}
+
+/* Tre puntini */
+.post .options-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.post .options-menu {
   display: none;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 6px;
+  z-index: 10;
 }
 
-section.active {
-  display: block;
+.post .options-menu button {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 }
+
+.post .options-menu button:hover {
+  background-color: #333;
+}
+
+/* Post media */
+.post img, .post video { width: 100%; border-radius: 8px; margin-bottom: 6px; }
 
 /* Popup */
 #popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.85);
   display: none;
   justify-content: center;
@@ -66,11 +102,7 @@ section.active {
   z-index: 200;
   animation: fadeIn 0.3s ease forwards;
 }
-
-#popup.show {
-  display: flex;
-}
-
+#popup.show { display: flex; }
 .popup-content {
   background-color: #111;
   padding: 20px;
@@ -81,22 +113,14 @@ section.active {
   flex-direction: column;
   gap: 10px;
 }
-
-.popup-content input,
-.popup-content textarea,
-.popup-content select {
+.popup-content input, .popup-content textarea, .popup-content select {
   padding: 8px;
   font-size: 16px;
   border-radius: 6px;
   border: none;
   width: 100%;
 }
-
-.popup-content textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
+.popup-content textarea { resize: vertical; min-height: 80px; }
 .popup-content button {
   padding: 10px;
   font-size: 16px;
@@ -106,10 +130,7 @@ section.active {
   background-color: #0095f6;
   color: #fff;
 }
-
-.popup-content .cancel-btn {
-  background-color: #555;
-}
+.popup-content .cancel-btn { background-color: #555; }
 
 /* Navbar */
 nav {
@@ -123,7 +144,6 @@ nav {
   padding: 8px 0;
   z-index: 100;
 }
-
 nav button {
   font-size: 22px;
   background: none;
@@ -134,28 +154,8 @@ nav button {
   flex-direction: column;
   align-items: center;
 }
-
-nav button.active {
-  color: #0095f6;
-}
-
-nav button:active {
-  transform: scale(1.2);
-}
+nav button.active { color: #0095f6; }
+nav button:active { transform: scale(1.2); }
 
 /* Animazione popup */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Post generico */
-.post {
-  margin-bottom: 16px;
-}
-
-.post img, .post video {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 6px;
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

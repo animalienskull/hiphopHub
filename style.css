@@ -1,126 +1,56 @@
-/* RESET & BODY */
-* { box-sizing:border-box; margin:0; padding:0; }
-html, body { height:100%; width:100%; font-family:'Helvetica Neue', Arial, sans-serif; background:#111; color:#fff; }
-body { display:flex; flex-direction:column; }
+/* style.css */
+
+/* RESET BASE */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  transition: all 0.2s ease;
+}
+
+/* CORPO APP */
+body {
+  background: #fff;
+  color: #000;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
 /* HEADER */
 header {
-  position: fixed; top:0; left:0; width:100%;
-  background:#000; color:#f1c40f; text-align:center;
-  padding:15px; font-weight:bold; font-size:22px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.5); z-index:100;
-}
-header .add-btn {
-  position:absolute; right:15px; top:50%; transform:translateY(-50%);
-  font-size:28px; cursor:pointer; color:#f1c40f; transition: transform 0.2s;
-}
-header .add-btn:hover { transform:translateY(-50%) scale(1.2); }
-
-/* MAIN CONTENT */
-main {
-  flex:1;
-  margin-top:60px; margin-bottom:60px;
-  overflow-y:auto;
-  display:flex; flex-direction:column; align-items:center;
-}
-
-/* SECTIONS */
-section { display:none; width:100%; max-width:500px; }
-section.active { display:block; }
-
-/* POST CARD */
-.post {
-  background:#1c1c1c; margin:10px; border-radius:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3); overflow:hidden; width:95%;
-  transition: transform 0.2s; position:relative;
-}
-.post:hover { transform:scale(1.01); }
-.post img, .post video { width:100%; display:block; }
-.post-content { padding:12px; }
-.username { font-weight:bold; color:#e74c3c; font-size:16px; }
-.caption { margin-top:5px; font-size:14px; line-height:1.4; }
-small { color:#aaa; font-size:12px; }
-
-/* DELETE BUTTON (3 dots) */
-.delete-post {
-  position:absolute; top:8px; right:8px;
-  font-size:20px; cursor:pointer; color:#aaa; font-weight:bold;
-  transition: color 0.2s;
-}
-.delete-post:hover { color:#e74c3c; }
-
-/* POST ACTIONS */
-.post-actions { display:flex; justify-content:space-around; padding:8px; border-top:1px solid #444; }
-.post-actions span { cursor:pointer; color:#ccc; transition: color 0.2s; }
-.post-actions span.liked { color:#e74c3c; }
-
-/* POPUP ADD POST */
-#popup {
-  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.85); z-index:200; justify-content:center; align-items:center;
-}
-.popup-content {
-  background:#222; padding:20px; border-radius:15px; width:90%; max-width:400px;
-}
-.popup-content input, .popup-content textarea, #barCount {
-  width:100%; padding:10px; margin-top:8px;
-  border:1px solid #555; border-radius:10px; background:#111; color:#fff;
-}
-.popup-content input:focus, .popup-content textarea:focus, #barCount:focus { outline:none; border:1px solid #f1c40f; }
-.popup-content button {
-  width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px;
-  background:#e74c3c; color:#fff; font-weight:bold; cursor:pointer; font-size:16px;
-}
-.popup-content button:hover { background:#c0392b; }
-
-/* NAV */
-nav {
-  position:fixed; bottom:0; left:0; width:100%;
-  display:flex; background:#000; border-top:1px solid #222;
-}
-nav button {
-  flex:1; padding:10px 0; background:#000; border:none;
-  font-size:18px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  color:#777; cursor:pointer;
-}
-nav button.active { color:#f1c40f; }
-nav button span { font-size:22px; margin-bottom:3px; }
-
-/* MOBILE */
-@media(max-width:500px){
-  header { font-size:20px; padding:12px; }
-  header .add-btn { font-size:26px; }
-  .post-content { padding:10px; }
-}
-/* ===== MOBILE INSTAGRAM STYLE FIX ===== */
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 60px;
-  background: #000;
-  color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  z-index: 1000;
-  border-bottom: 1px solid #222;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 100;
 }
 
-.header h1 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
+/* NAVBAR INFERIORE */
+nav {
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 100;
 }
 
-.add-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #1db954;
+nav a {
+  text-decoration: none;
   color: #000;
   font-size: 28px;
   display: flex;
@@ -128,35 +58,77 @@ nav button span { font-size:22px; margin-bottom:3px; }
   justify-content: center;
 }
 
-.main {
-  padding-top: 72px;
-  padding-bottom: 90px;
+nav a:active {
+  transform: scale(1.3);
 }
 
-.nav {
+/* PULSANTE + FLOTTANTE */
+.floating-plus {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
-  background: #000;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid #222;
-}
-
-.nav button {
-  background: none;
-  border: none;
+  bottom: 80px; /* sopra la navbar */
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #0095f6;
   color: #fff;
-  font-size: 24px;
+  font-size: 36px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 100;
 }
 
-.nav span {
-  font-size: 11px;
-  margin-top: 4px;
+.floating-plus:active {
+  transform: scale(1.2);
 }
+
+/* CONTENUTO PRINCIPALE */
+main {
+  flex: 1;
+  padding: 10px;
+  margin-bottom: 70px; /* spazio per navbar */
+}
+
+/* POST E CUORE ANIMATO */
+.post {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.post img {
+  width: 100%;
+  display: block;
+}
+
+.heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 80px;
+  color: rgba(255, 0, 0, 0.8);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  pointer-events: none;
+  animation: pop-heart 0.6s forwards;
+}
+
+@keyframes pop-heart {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+

@@ -93,7 +93,19 @@ section.active { display: block; }
 .post .options-menu button:hover { background-color: #333; }
 
 /* Post media */
-.post img, .post video { width: 100%; border-radius: 8px; margin-bottom: 6px; }
+.post img, .post video { 
+  width: 100%;          /* occuperà tutta la larghezza del post */
+  max-height: 300px;    /* altezza massima */
+  object-fit: cover;    /* ridimensiona e ritaglia il contenuto mantenendo il quadrato */
+  border-radius: 8px; 
+  margin-bottom: 6px; 
+}
+
+/* Se vuoi renderlo sempre quadrato perfetto */
+.post img {
+  aspect-ratio: 1/1;   /* forza il quadrato */
+  object-fit: cover;    /* taglia l'immagine se necessario */
+}
 
 /* Like / Dislike */
 .post .post-actions {

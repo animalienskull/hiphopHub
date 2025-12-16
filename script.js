@@ -35,9 +35,7 @@ function openPopup() {
   popup.classList.add('show');
 }
 
-function closePopup() {
-  popup.classList.remove('show');
-}
+function closePopup() { popup.classList.remove('show'); }
 
 // Creazione post
 function submitPost() {
@@ -47,17 +45,23 @@ function submitPost() {
   const video = document.getElementById('popupVideo').value.trim();
   const bars = barCount.value;
 
-  if(!name) { alert('Devi inserire un nome per pubblicare.'); return; }
-
   const activeSection = document.querySelector('main section.active');
   const activeFeed = activeSection.querySelector('div');
 
-  // Restrizione lyrics
+  // Validazione
+  if(!name) { alert('Devi inserire un nome.'); return; }
+
   if(activeSection.id === 'lyrics') {
+    if(!text) { alert('Devi scrivere il testo delle lyrics.'); return; }
     const lines = text.split(/\n/);
     const maxBars = bars === '4' ? 4 : bars === '8' ? 8 : bars === '16' ? 16 : Infinity;
     if(lines.length > maxBars) {
       alert(`Hai selezionato ${bars} barre, non puoi scrivere più di ${maxBars} righe.`);
+      return;
+    }
+  } else {
+    if(!text && !img && !video) {
+      alert('Devi inserire almeno un testo, un\'immagine o un video.');
       return;
     }
   }
@@ -92,8 +96,30 @@ function submitPost() {
   } else {
     if(img) { const imgEl = document.createElement('img'); imgEl.src = img; postDiv.appendChild(imgEl); }
     if(video) { const vidEl = document.createElement('video'); vidEl.src = video; vidEl.controls = true; postDiv.appendChild(vidEl); }
-    if(text || name) { const caption = document.createElement('p'); caption.textContent = `${name}: ${text}`; postDiv.appendChild(caption); }
+    if(text) { const caption = document.createElement('p'); caption.textContent = `${name}: ${text}`; postDiv.appendChild(caption); }
   }
+
+  // Like / Dislike
+  const actionsDiv = document.createElement('div');
+  actionsDiv.classList.add('post-actions');
+
+  const likeBtn = document.createElement('button');
+  const likeCounter = document.createElement('span');
+  likeCounter.textContent = '0';
+  likeBtn.innerHTML = '👍 ';
+  likeBtn.appendChild(likeCounter);
+  likeBtn.onclick = () => likeCounter.textContent = parseInt(likeCounter.textContent)+1;
+
+  const dislikeBtn = document.createElement('button');
+  const dislikeCounter = document.createElement('span');
+  dislikeCounter.textContent = '0';
+  dislikeBtn.innerHTML = '👎 ';
+  dislikeBtn.appendChild(dislikeCounter);
+  dislikeBtn.onclick = () => dislikeCounter.textContent = parseInt(dislikeCounter.textContent)+1;
+
+  actionsDiv.appendChild(likeBtn);
+  actionsDiv.appendChild(dislikeBtn);
+  postDiv.appendChild(actionsDiv);
 
   activeFeed.prepend(postDiv);
 

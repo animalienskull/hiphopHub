@@ -14,11 +14,12 @@ const nameInputContainer = document.getElementById('nameInputContainer');
 const lyricsOptions = document.getElementById('lyricsOptions');
 const mediaContainer = document.getElementById('mediaContainer');
 const popupName = document.getElementById('popupName');
+const popupText = document.getElementById('popupText');
+const barCount = document.getElementById('barCount');
 
 function openPopup() {
   const activeSection = document.querySelector('main section.active').id;
 
-  // Mostra/nascondi campi in base alla sezione
   if(activeSection === 'lyrics') {
     popupTitle.textContent = 'Add Lyrics';
     nameInputContainer.style.display = 'block';
@@ -39,55 +40,68 @@ function openPopup() {
   popup.classList.add('show');
 }
 
-function closePopup() {
-  popup.classList.remove('show');
-}
+function closePopup() { popup.classList.remove('show'); }
 
-// Aggiungere post
+// Creazione post
 function submitPost() {
-  const name = popupName.value;
-  const img = document.getElementById('popupImg').value;
-  const video = document.getElementById('popupVideo').value;
-  const text = document.getElementById('popupText').value;
-  const barCount = document.getElementById('barCount').value;
+  const name = popupName.value.trim();
+  const img = document.getElementById('popupImg').value.trim();
+  const video = document.getElementById('popupVideo').value.trim();
+  const text = popupText.value.trim();
+  const selectedBars = barCount.value;
 
-  const activeFeed = document.querySelector('main section.active div');
+  const activeSection = document.querySelector('main section.active');
+  const activeFeed = activeSection.querySelector('div');
+
+  // Restrizioni Lyrics
+  if(activeSection.id === 'lyrics') {
+    const maxBars = selectedBars === '4' ? 4 :
+                    selectedBars === '8' ? 8 :
+                    selectedBars === '16' ? 16 : Infinity;
+    const lines = text.split(/\n/);
+    if(lines.length > maxBars) {
+      alert(`Hai selezionato ${selectedBars} barre, non puoi scrivere più di ${maxBars} righe.`);
+      return;
+    }
+  }
 
   const postDiv = document.createElement('div');
   postDiv.classList.add('post');
 
-  // Lyrics speciale
-  if(document.querySelector('main section.active').id === 'lyrics') {
+  // Tre puntini
+  const optionsBtn = document.createElement('div');
+  optionsBtn.classList.add('options-btn');
+  optionsBtn.textContent = '⋮';
+  const optionsMenu = document.createElement('div');
+  optionsMenu.classList.add('options-menu');
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'Elimina';
+  deleteBtn.onclick = () => postDiv.remove();
+  optionsMenu.appendChild(deleteBtn);
+  optionsBtn.onclick = () => optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
+
+  postDiv.appendChild(optionsBtn);
+  postDiv.appendChild(optionsMenu);
+
+  // Contenuto
+  if(activeSection.id === 'lyrics') {
     const p = document.createElement('p');
-    p.textContent = `${name} (${barCount} bars): ${text}`;
+    p.textContent = `${name} (${selectedBars} bars): ${text}`;
     postDiv.appendChild(p);
   } else {
-    if(img) {
-      const imgEl = document.createElement('img');
-      imgEl.src = img;
-      postDiv.appendChild(imgEl);
-    }
-    if(video) {
-      const vidEl = document.createElement('video');
-      vidEl.src = video;
-      vidEl.controls = true;
-      postDiv.appendChild(vidEl);
-    }
-    if(text || name) {
-      const caption = document.createElement('p');
-      caption.textContent = `${name ? name + ': ' : ''}${text}`;
-      postDiv.appendChild(caption);
-    }
+    if(img) { const imgEl = document.createElement('img'); imgEl.src = img; postDiv.appendChild(imgEl); }
+    if(video) { const vidEl = document.createElement('video'); vidEl.src = video; vidEl.controls = true; postDiv.appendChild(vidEl); }
+    if(text || name) { const caption = document.createElement('p'); caption.textContent = `${name ? name+': ' : ''}${text}`; postDiv.appendChild(caption); }
   }
 
   activeFeed.prepend(postDiv);
 
-  closePopup();
-
-  // reset campi
+  // Reset campi
   popupName.value = '';
   document.getElementById('popupImg').value = '';
   document.getElementById('popupVideo').value = '';
-  document.getElementById('popupText').value = '';
-  document.getElementById('barCount').value = '4';
+  popupText.value = '';
+  barCount.value = '4';
+
+  closePopup();
 }

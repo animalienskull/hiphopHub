@@ -20,18 +20,38 @@
     <section id="lyrics"><div id="lyricsFeed"></div></section>
   </main>
 
+  <!-- POPUP -->
   <div id="popup">
     <div class="popup-content">
-      <h3>Add Post</h3>
-      <input id="popupUser" placeholder="Username">
-      <input id="popupImg" placeholder="Image URL (optional)">
-      <input id="popupVideo" placeholder="Video URL (optional)">
+      <h3 id="popupTitle">Add Post</h3>
+
+      <!-- Input dinamici -->
+      <div id="nameInputContainer">
+        <input id="popupName" placeholder="Nome">
+      </div>
+
+      <div id="mediaContainer">
+        <input id="popupImg" placeholder="Image URL (optional)">
+        <input id="popupVideo" placeholder="Video URL (optional)">
+      </div>
+
+      <div id="lyricsOptions" style="display:none;">
+        <label for="barCount">Choose bars:</label>
+        <select id="barCount">
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="16">16</option>
+          <option value="free">Free</option>
+        </select>
+      </div>
+
       <textarea id="popupText" placeholder="Caption / content"></textarea>
       <button onclick="submitPost()">Post</button>
       <button onclick="closePopup()" class="cancel-btn">Cancel</button>
     </div>
   </div>
 
+  <!-- Navbar -->
   <nav>
     <button class="active" onclick="openTab('rapper')"><span>🎤</span>Rapper</button>
     <button onclick="openTab('graffiti')"><span>🧱</span>Graffiti</button>

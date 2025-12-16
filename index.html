@@ -26,9 +26,14 @@
       <h3 id="popupTitle">Add Post</h3>
 
       <input id="popupName" placeholder="Nome" required>
+
       <div id="mediaContainer">
-        <input id="popupImg" placeholder="Image URL (optional)">
-        <input id="popupVideo" placeholder="Video URL (optional)">
+        <label>
+          Image: <input type="file" id="popupImgFile" accept="image/*">
+        </label>
+        <label>
+          Video: <input type="file" id="popupVideoFile" accept="video/*">
+        </label>
       </div>
 
       <div id="lyricsOptions" style="display:none;">
@@ -58,4 +63,3 @@
   <script src="./script.js"></script>
 </body>
 </html>
-

@@ -1,62 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>HipHop IG Hub</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>hiphop hub</title>
-    <link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
   <header>
-  🎤 HipHop IG Hub
-  <span class="floating-plus" onclick="openPopup()">＋</span>
+    🎤 HipHop IG Hub
+    <span class="add-btn" onclick="openPopup()">＋</span>
+  </header>
 
-</header>
+  <main>
+    <section id="rapper" class="active"><div id="rapperFeed"></div></section>
+    <section id="graffiti"><div id="graffitiFeed"></div></section>
+    <section id="dj"><div id="djFeed"></div></section>
+    <section id="lyrics"><div id="lyricsFeed"></div></section>
+  </main>
 
-<main>
-  <section id="rapper" class="active"><div id="rapperFeed"></div></section>
-  <section id="graffiti"><div id="graffitiFeed"></div></section>
-  <section id="dj"><div id="djFeed"></div></section>
-  <section id="lyrics"><div id="lyricsFeed"></div></section>
-</main>
-
-<div id="popup">
-  <div class="popup-content">
-    <h3>Add Post</h3>
-    <input id="popupUser" placeholder="Username">
-
-    <!-- Opzioni barre per Lyrics -->
-    <div id="lyricsOptions" style="display:none; margin-top:8px;">
-      <label for="barCount">Choose bars:</label>
-      <select id="barCount">
-        <option value="4">4</option>
-        <option value="8">8</option>
-        <option value="16">16</option>
-        <option value="free">Free</option>
-      </select>
+  <div id="popup">
+    <div class="popup-content">
+      <h3>Add Post</h3>
+      <input id="popupUser" placeholder="Username">
+      <input id="popupImg" placeholder="Image URL (optional)">
+      <input id="popupVideo" placeholder="Video URL (optional)">
+      <textarea id="popupText" placeholder="Caption / content"></textarea>
+      <button onclick="submitPost()">Post</button>
+      <button onclick="closePopup()" class="cancel-btn">Cancel</button>
     </div>
-
-    <!-- Image / Video URL solo per sezioni non Lyrics -->
-    <input id="popupImg" placeholder="Image URL (optional)">
-    <input id="popupVideo" placeholder="Video URL (optional)">
-
-    <textarea id="popupText" placeholder="Caption / content"></textarea>
-    <button onclick="submitPost()">Post</button>
-    <button onclick="closePopup()" style="margin-top:5px;background:#555;">Cancel</button>
   </div>
-</div>
 
-<nav>
-  <button class="active" onclick="openTab('rapper')"><span>🎤</span>Rapper</button>
-  <button onclick="openTab('graffiti')"><span>🧱</span>Graffiti</button>
-  <button onclick="openTab('dj')"><span>🎧</span>DJ</button>
-  <button onclick="openTab('lyrics')"><span>✍️</span>Lyrics</button>
-</nav>
-    <script  src="./script.js"></script>
+  <nav>
+    <button class="active" onclick="openTab('rapper')"><span>🎤</span>Rapper</button>
+    <button onclick="openTab('graffiti')"><span>🧱</span>Graffiti</button>
+    <button onclick="openTab('dj')"><span>🎧</span>DJ</button>
+    <button onclick="openTab('lyrics')"><span>✍️</span>Lyrics</button>
+  </nav>
 
-  </body>
-  
+  <script src="./script.js"></script>
+</body>
 </html>
+
